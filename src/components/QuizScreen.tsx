@@ -78,7 +78,7 @@ class QuizScreen extends Component<QuizProps, QuizState> {
         <h1>Choose the right answer</h1>
         <h2>{quiz && quiz.question}</h2>
         <div>
-          {indices && indices.map(index => <Button onClick={(e: MouseEvent<HTMLButtonElement>) => {
+          {indices && indices.map(index => <Button key={index} onClick={(e: MouseEvent<HTMLButtonElement>) => {
             if(answer !== null) {
               return;
             }
