@@ -62,7 +62,7 @@ class QuizScreen extends Component<{}, QuizState> {
   }
 
   render() {
-    const {currentQuiz, currentQuestion, choices, indices} = this.state;
+    const {currentQuiz, currentQuestion, choices, indices, answer} = this.state;
     const quiz = currentQuiz[currentQuestion];
     console.log(this.state)
     console.log(quiz)
@@ -73,6 +73,9 @@ class QuizScreen extends Component<{}, QuizState> {
         <h2>{quiz && quiz.question}</h2>
         <div>
           {indices && indices.map(index => <Button onClick={(e: MouseEvent<HTMLButtonElement>) => {
+            if(answer !== null) {
+              return;
+            }
             if(e.currentTarget.innerText === quiz.correct_answer) {
               this.setState(prevState => ({
                 score: prevState.score + 1,
