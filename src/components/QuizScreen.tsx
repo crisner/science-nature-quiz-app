@@ -7,6 +7,8 @@ interface QuizState {
   currentQuestion: number
   score: number
   indices: number[]
+  answer: number | null
+  correct: boolean | null
 }
 
 class QuizScreen extends Component<{}, QuizState> {
@@ -15,7 +17,9 @@ class QuizScreen extends Component<{}, QuizState> {
     choices: [],
     currentQuestion: 0,
     score: 0,
-    indices: []
+    indices: [],
+    answer: null,
+    correct: null
   }
 
   randomPick = (indices: number[]) => {
@@ -27,6 +31,11 @@ class QuizScreen extends Component<{}, QuizState> {
       randIdx[0] = temp;
     }
     return randIdx;
+  }
+
+  isCorrect = (index: number) => {
+    const { answer, correct } = this.state;
+    return answer === index && correct ? 'green' : (answer === index && !correct ? 'red' : 'grey');
   }
 
   async componentDidMount() {
@@ -45,7 +54,9 @@ class QuizScreen extends Component<{}, QuizState> {
       this.setState(() => ({
         choices: [this.state.currentQuiz[this.state.currentQuestion].correct_answer,
                   ...this.state.currentQuiz[this.state.currentQuestion].incorrect_answers],
-        indices: this.randomPick([0,1,2,3])
+        indices: this.randomPick([0,1,2,3]),
+        answer: null,
+        correct: null
       }))
     }
   }
@@ -64,14 +75,17 @@ class QuizScreen extends Component<{}, QuizState> {
           {indices && indices.map(index => <Button onClick={(e: MouseEvent<HTMLButtonElement>) => {
             if(e.currentTarget.innerText === quiz.correct_answer) {
               this.setState(prevState => ({
-                score: prevState.score + 1
+                score: prevState.score + 1,
+                answer: index,
+                correct: true
               }))
-              e.currentTarget.style.backgroundColor = 'green';
             } else {
-              e.currentTarget.style.backgroundColor = 'red';
+              this.setState({
+                answer: index,
+                correct: false
+              })
             }
-            console.log(e.currentTarget.style.backgroundColor)
-          }} color="grey" text={choices[index]} />)}
+          }} color={this.isCorrect(index)} text={choices[index]} />)}
         </div>
         <footer>
           <Button onClick={() => {
