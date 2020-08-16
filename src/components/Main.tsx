@@ -20,7 +20,10 @@ class Main extends Component {
   }
 
   replay = () => {
-    this.setState({ score: null})
+    this.setState({ 
+      mode: null,
+      score: null
+    })
   }
   
   render() {
