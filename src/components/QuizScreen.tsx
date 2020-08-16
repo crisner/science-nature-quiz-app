@@ -11,7 +11,11 @@ interface QuizState {
   correct: boolean | null
 }
 
-class QuizScreen extends Component<{}, QuizState> {
+interface QuizProps {
+  mode: string | null
+}
+
+class QuizScreen extends Component<QuizProps, QuizState> {
   state: QuizState = {
     currentQuiz: [],
     choices: [],
@@ -39,7 +43,9 @@ class QuizScreen extends Component<{}, QuizState> {
   }
 
   async componentDidMount() {
-    const response = await fetch('https://opentdb.com/api.php?amount=10&category=17&difficulty=easy&type=multiple');
+    const url = `https://opentdb.com/api.php?amount=10&category=17&difficulty=${this.props.mode}&type=multiple`;
+    console.log('url:', url)
+    const response = await fetch(url);
     const results = await response.json();
     this.setState((prevState) => ({
       currentQuiz: results.results,

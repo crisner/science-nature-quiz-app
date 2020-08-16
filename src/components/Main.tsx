@@ -19,7 +19,7 @@ class Main extends Component {
       
       <main>
         {!this.state.mode ? <HomeScreen onClick={this.modeHandler} /> : null}
-        {this.state.mode ? <QuizScreen /> : null}
+        {this.state.mode ? <QuizScreen mode={this.state.mode} /> : null}
         {/* <HomeScreen onClick={this.modeHandler} /> */}
         
       </main>
