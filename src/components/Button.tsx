@@ -7,7 +7,7 @@ interface ButtonProps {
 }
 
 const Button = (props: ButtonProps) => (
-<button onClick={props.onClick} style={{backgroundColor: props.color}}>{props.text}</button>
+  <button onClick={props.onClick} style={{backgroundColor: props.color}}>{props.text}</button>
 )
 
 export default Button;

@@ -27,9 +27,7 @@ class Main extends Component {
   }
   
   render() {
-    console.log(this.state)
     return (
-      
       <main>
         {!this.state.mode ? <HomeScreen onClick={this.modeHandler} /> : null}
         {this.state.mode && this.state.score === null ? <QuizScreen mode={this.state.mode} getScore={this.getScore} /> : null}

@@ -70,9 +70,6 @@ class QuizScreen extends Component<QuizProps, QuizState> {
   render() {
     const {currentQuiz, currentQuestion, choices, indices, answer} = this.state;
     const quiz = currentQuiz[currentQuestion];
-    console.log(this.state)
-    console.log(quiz)
-    console.log(indices)
     return (
       <Fragment>
         <h1>Choose the right answer</h1>
