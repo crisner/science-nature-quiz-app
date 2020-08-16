@@ -13,6 +13,7 @@ interface QuizState {
 
 interface QuizProps {
   mode: string | null
+  getScore: any
 }
 
 class QuizScreen extends Component<QuizProps, QuizState> {
@@ -44,7 +45,6 @@ class QuizScreen extends Component<QuizProps, QuizState> {
 
   async componentDidMount() {
     const url = `https://opentdb.com/api.php?amount=10&category=17&difficulty=${this.props.mode}&type=multiple`;
-    console.log('url:', url)
     const response = await fetch(url);
     const results = await response.json();
     this.setState((prevState) => ({
@@ -97,12 +97,16 @@ class QuizScreen extends Component<QuizProps, QuizState> {
           }} color={this.isCorrect(index)} text={choices[index]} />)}
         </div>
         <footer>
+        {currentQuestion === 0 || (currentQuestion < currentQuiz.length - 1) ? (
           <Button onClick={() => {
-            this.setState((prevState) => ({
-              currentQuestion: prevState.currentQuestion + 1
-            }))
-            console.log(this.state)
-          }} color="grey" text="Next" />
+              this.setState((prevState) => ({
+                currentQuestion: prevState.currentQuestion + 1
+              }))
+          }} color="grey" text="Next" />) : (
+            <Button onClick={() => {
+              this.props.getScore(this.state.score)
+            }} color="grey" text="Get score" />)
+        } 
         </footer>
       </Fragment>
     )
